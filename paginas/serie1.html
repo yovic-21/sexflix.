@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Leveling - Ver Serie Online | SEXFLIX</title>
+
+    <link rel="stylesheet" href="../styles/styles.css">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        /* IMPORTANTE: ESTO DEBE IR EN styles.css para que se vea bien */
+        .modal-player {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-drive-wrapper {
+            width: 80%;
+            height: 80%;
+            max-width: 1280px;
+        }
+    </style>
+</head>
+<body>
+
+ 
+
+    <main>
+        <div class="serie-container">
+            <div class="banner">
+                <img src="../img/sololeveling_banner.jpg" alt="Banner de Solo Leveling">
+            </div>
+
+            <div class="contenedor-video" id="contenedor-video-drive">
+                <p style="text-align:center; color: #aaa; padding: 20px;">Presiona "Reproducir" o selecciona un capítulo para comenzar.</p>
+            </div>
+
+            <div class="info-serie">
+                <div style="padding: 0 50px;"> <h2>Solo Leveling</h2>
+                    
+                    <p class="rating"><i class='bx bxs-star'></i> 9.2</p>
+
+                    <p class="meta">2024 | 12 Cap. | Anime, Fantasía, Acción</p>
+
+                    <div class="acciones-serie">
+                        <button class="btn-play-serie">
+                            <i class='bx bxs-right-arrow'></i> Reproducir
+                        </button>
+                        <button class="btn-add-lista">
+                            <i class='bx bx-plus'></i> Mi Lista
+                        </button>
+                    </div>
+
+                    <div class="descripcion-wrapper">
+                        <p class="descripcion" id="descripcion-id">
+                            La humanidad se enfrenta a una catástrofe inminente mientras los portales dimensionales se abren, permitiendo la entrada de monstruos. El cazador más débil, Sung Jinwoo, obtiene un misterioso poder que lo lleva a convertirse en un guerrero de élite, enfrentando desafíos que van más allá de su imaginación.
+                        </p>
+                        <button class="btn-ver-mas" onclick="document.getElementById('descripcion-id').classList.toggle('expandida')">
+                            Ver más <i class='bx bx-chevron-down'></i>
+                        </button>
+                    </div>
+
+                    <div class="temporadas-y-capitulos">
+                        <label for="select-temporada-id" class="label-temporada">Temporada:</label>
+                        <select id="select-temporada-id">
+                            <option value="1" selected>Temporada 1</option>
+                            <option value="2">Temporada 2</option>
+                            </select>
+                        <p class="caps-count" id="caps-count-id">12 capítulos</p>
+                    </div>
+
+                    <div class="caps-list" id="temporada-1-list">
+                        <button class="cap selected" data-cap="1" onclick="cambiarCapitulo(1, 1)">1</button>
+                        <button class="cap" data-cap="2" onclick="cambiarCapitulo(2, 1)">2</button>
+                        <button class="cap" data-cap="3" onclick="cambiarCapitulo(3, 1)">3</button>
+                        <button class="cap" data-cap="4" onclick="cambiarCapitulo(4, 1)">4</button>
+                        <button class="cap" data-cap="5" onclick="cambiarCapitulo(5, 1)">5</button>
+                        <button class="cap" data-cap="6" onclick="cambiarCapitulo(6, 1)">6</button>
+                        <button class="cap" data-cap="7" onclick="cambiarCapitulo(7, 1)">7</button>
+                        <button class="cap" data-cap="8" onclick="cambiarCapitulo(8, 1)">8</button>
+                        <button class="cap" data-cap="9" onclick="cambiarCapitulo(9, 1)">9</button>
+                        <button class="cap" data-cap="10" onclick="cambiarCapitulo(10, 1)">10</button>
+                        <button class="cap" data-cap="11" onclick="cambiarCapitulo(11, 1)">11</button>
+                        <button class="cap" data-cap="12" onclick="cambiarCapitulo(12, 1)">12</button>
+                    </div>
+
+                    <div class="caps-list" id="temporada-2-list" style="display: none;">
+                        <button class="cap" data-cap="1" onclick="cambiarCapitulo(1, 2)">1</button>
+                        <button class="cap" data-cap="2" onclick="cambiarCapitulo(2, 2)">2</button>
+                        <button class="cap" data-cap="3" onclick="cambiarCapitulo(3, 2)">3</button>
+                        <button class="cap" data-cap="4" onclick="cambiarCapitulo(4, 2)">4</button>
+                        <button class="cap" data-cap="5" onclick="cambiarCapitulo(5, 2)">5</button>
+                        <button class="cap" data-cap="6" onclick="cambiarCapitulo(6, 2)">6</button>
+                        <button class="cap" data-cap="7" onclick="cambiarCapitulo(7, 2)">7</button>
+                        <button class="cap" data-cap="8" onclick="cambiarCapitulo(8, 2)">8</button>
+                        <button class="cap" data-cap="9" onclick="cambiarCapitulo(9, 2)">9</button>
+                        <button class="cap" data-cap="10" onclick="cambiarCapitulo(10, 2)">10</button>
+                        <button class="cap" data-cap="11" onclick="cambiarCapitulo(11, 2)">11</button>
+                        <button class="cap" data-cap="12" onclick="cambiarCapitulo(12, 2)">12</button>
+                        <button class="cap" data-cap="13" onclick="cambiarCapitulo(13, 2)">13</button>
+                    </div>
+
+                </div> </div> </div> </main>
+
+    <script src="../app.js"></script>
+
+    <script>
+        // 🛑 Lógica para mostrar/ocultar las listas de capítulos al cambiar el selector
+        document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('select-temporada-id');
+            const listaT1 = document.getElementById('temporada-1-list');
+            const listaT2 = document.getElementById('temporada-2-list');
+
+            // 1. Lógica de visibilidad
+            const handleSeasonChange = (num) => {
+                listaT1.style.display = (num === 1) ? 'grid' : 'none';
+                listaT2.style.display = (num === 2) ? 'grid' : 'none';
+                
+                // Llama a la función de app.js para actualizar la T. ACTIVA y el contador
+                if (typeof cargarTemporada === 'function') {
+                    cargarTemporada(num);
+                }
+            };
+
+            // 2. Inicialización: Asegurarse de que el primer capítulo de la T1 se marque y cargue
+            // Esto se hace con un pequeño retraso para asegurar que app.js ya cargó
+            setTimeout(() => {
+                // Llama a la función de app.js para cargar el capítulo 1 de la temporada 1
+                if (typeof cambiarCapitulo === 'function') {
+                    cambiarCapitulo(1, 1);
+                }
+            }, 100); 
+
+            // 3. Listener para el selector
+            selector.addEventListener('change', (e) => {
+                const numTemporada = parseInt(e.target.value);
+                handleSeasonChange(numTemporada);
+                
+                // Al cambiar la temporada, cargamos el primer capítulo de la nueva temporada.
+                if (typeof cambiarCapitulo === 'function') {
+                    cambiarCapitulo(1, numTemporada);
+                }
+            });
+
+            // 4. Asegurar el estado inicial (T1 visible)
+            handleSeasonChange(parseInt(selector.value));
+
+        });
+    </script>
+</body>
+</html>
